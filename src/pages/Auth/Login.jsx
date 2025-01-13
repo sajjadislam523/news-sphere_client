@@ -3,12 +3,16 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { FaGoogle } from "react-icons/fa";
-import { Link } from "react-router-dom";
-import loginImg from "../../assets/login/loginGif.gif";
+import { Link, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import loginImg from "../../assets/auth/loginGif.gif";
 import useAuth from "../../hooks/useAuth.jsx";
+import useAxiosPublic from "../../hooks/useAxiosPublic.jsx";
 
 const Login = () => {
-    const { logIn, googleSignIn } = useAuth(); // Assuming `googleSignIn` is a method in your useAuth hook
+    const { logIn, googleSignIn } = useAuth();
+    const { axiosPublic } = useAxiosPublic();
+    const navigate = useNavigate();
 
     const handleLogin = (e) => {
         e.preventDefault();
@@ -27,7 +31,21 @@ const Login = () => {
     const handleGoogleLogin = () => {
         googleSignIn()
             .then((res) => {
-                console.log("Google Login Success:", res);
+                const userInfo = {
+                    email: res.user?.email,
+                    name: res.user?.displayName,
+                };
+                axiosPublic.post("/users", userInfo).then((res) => {
+                    if (res.data.insertedId) {
+                        Swal.fire({
+                            title: "Registration Successful",
+                            text: "You have successfully registered!",
+                            icon: "success",
+                            timer: 1500,
+                        });
+                        navigate("/");
+                    }
+                });
             })
             .catch((err) => {
                 console.error("Google Login Failed:", err);
