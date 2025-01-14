@@ -32,7 +32,7 @@ const AddArticle = () => {
             }));
             setPublishers(options);
         });
-    }, []);
+    }, [axiosPublic]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
