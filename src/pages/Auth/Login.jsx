@@ -80,6 +80,7 @@ const Login = () => {
                     text:
                         err.message ||
                         "An error occurred while trying to log in with Google. Please try again.",
+                    timer: 1500,
                 });
             });
         navigate(from, { replace: true });
