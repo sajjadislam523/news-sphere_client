@@ -44,13 +44,13 @@ const Register = () => {
     };
 
     return (
-        <div className="flex items-center justify-center min-h-screen px-4 bg-gray-100 sm:px-6 lg:px-8 font-poppins">
+        <div className="flex items-center justify-center min-h-screen px-4 py-4 bg-gray-100 sm:px-6 lg:px-8 font-poppins">
             <div className="flex flex-col items-center w-full max-w-4xl overflow-hidden bg-white rounded-lg shadow-lg md:flex-row">
                 {/* Left Section: Registration Form */}
                 <div className="w-full p-6 sm:p-8 md:w-1/2">
                     <Card>
-                        <CardHeader>
-                            <CardTitle className="mb-4 text-2xl text-center">
+                        <CardHeader className="p-4">
+                            <CardTitle className="text-2xl text-center ">
                                 Create Your Account
                             </CardTitle>
                         </CardHeader>
@@ -60,7 +60,7 @@ const Register = () => {
                                 className="space-y-6"
                             >
                                 {/* Name Field */}
-                                <div className="space-y-1">
+                                <div>
                                     <Label htmlFor="name" className="text-sm">
                                         Full Name
                                     </Label>
@@ -72,8 +72,11 @@ const Register = () => {
                                     />
                                 </div>
                                 {/* Photo URL */}
-                                <div className="space-y-1">
-                                    <Label htmlFor="name" className="text-sm">
+                                <div>
+                                    <Label
+                                        htmlFor="photoURL"
+                                        className="text-sm"
+                                    >
                                         Photo URL
                                     </Label>
                                     <Input
@@ -83,9 +86,8 @@ const Register = () => {
                                         className="w-full"
                                     />
                                 </div>
-
                                 {/* Email Field */}
-                                <div className="space-y-1">
+                                <div>
                                     <Label htmlFor="email" className="text-sm">
                                         Email Address
                                     </Label>
@@ -96,9 +98,8 @@ const Register = () => {
                                         className="w-full"
                                     />
                                 </div>
-
                                 {/* Password Field */}
-                                <div className="space-y-1">
+                                <div>
                                     <Label
                                         htmlFor="password"
                                         className="text-sm"
@@ -112,7 +113,6 @@ const Register = () => {
                                         className="w-full"
                                     />
                                 </div>
-
                                 {/* Submit Button */}
                                 <Button
                                     type="submit"
@@ -121,7 +121,6 @@ const Register = () => {
                                     Register
                                 </Button>
                             </form>
-
                             {/* Login Link */}
                             <p className="mt-4 text-sm text-center">
                                 Already have an account?{" "}
@@ -135,7 +134,6 @@ const Register = () => {
                         </CardContent>
                     </Card>
                 </div>
-
                 {/* Right Section: GIF */}
                 <div className="hidden w-full md:block md:w-1/2">
                     <img

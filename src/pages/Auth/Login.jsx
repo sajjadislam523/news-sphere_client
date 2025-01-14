@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { FaGoogle } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import loginImg from "../../assets/auth/loginGif.gif";
 import useAuth from "../../hooks/useAuth.jsx";
@@ -13,6 +13,23 @@ const Login = () => {
     const { logIn, googleSignIn } = useAuth();
     const { axiosPublic } = useAxiosPublic();
     const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || "/";
+
+    const getErrorMessage = (errorCode) => {
+        switch (errorCode) {
+            case "auth/invalid-email":
+                return "The email address is not valid. Please check and try again.";
+            case "auth/user-not-found":
+                return "No account found with this email. Please register first.";
+            case "auth/wrong-password":
+                return "The password is incorrect. Please try again.";
+            case "auth/invalid-credential":
+                return "Invalid email or password. Please try again.";
+            default:
+                return "An unknown error occurred. Please try again.";
+        }
+    };
 
     const handleLogin = (e) => {
         e.preventDefault();
@@ -21,11 +38,20 @@ const Login = () => {
         const email = form.email.value;
         const password = form.password.value;
 
-        console.log(email, password);
-
-        logIn(email, password).then((res) => {
-            console.log(res);
-        });
+        logIn(email, password)
+            .then((res) => {
+                console.log(res.user);
+            })
+            .catch((err) => {
+                const errorMessage = getErrorMessage(err.code);
+                Swal.fire({
+                    icon: "error",
+                    title: "An error occurred",
+                    text:
+                        errorMessage || "An Error occurred. Please try again.",
+                });
+            });
+        navigate(from, { replace: true });
     };
 
     const handleGoogleLogin = () => {
@@ -38,8 +64,8 @@ const Login = () => {
                 axiosPublic.post("/users", userInfo).then((res) => {
                     if (res.data.insertedId) {
                         Swal.fire({
-                            title: "Registration Successful",
-                            text: "You have successfully registered!",
+                            title: "Login Successful",
+                            text: "You have successfully logged in!",
                             icon: "success",
                             timer: 1500,
                         });
@@ -48,8 +74,15 @@ const Login = () => {
                 });
             })
             .catch((err) => {
-                console.error("Google Login Failed:", err);
+                Swal.fire({
+                    icon: "error",
+                    title: "An error occurred",
+                    text:
+                        err.message ||
+                        "An error occurred while trying to log in with Google. Please try again.",
+                });
             });
+        navigate(from, { replace: true });
     };
 
     return (
