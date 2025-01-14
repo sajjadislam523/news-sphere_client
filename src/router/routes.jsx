@@ -27,7 +27,7 @@ const routes = createBrowserRouter([
                 path: "/addArticles",
                 element: (
                     <PrivateRoute>
-                        <AddArticle />,
+                        <AddArticle />
                     </PrivateRoute>
                 ),
             },
