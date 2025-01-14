@@ -34,7 +34,7 @@ const AddPublishers = () => {
         }
 
         try {
-            // Upload the logo to ImgBB or Cloudinary
+            // Upload the logo to ImgBB
             const formData = new FormData();
             formData.append("image", logoFile);
 

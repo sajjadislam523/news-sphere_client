@@ -18,6 +18,7 @@ const AddArticle = () => {
     const [selectedPublisher, setSelectedPublisher] = useState("");
     const axiosSecure = useAxiosSecure();
     const axiosPublic = useAxiosPublic();
+    const [isLoading, setIsLoading] = useState(false);
 
     const tagOptions = [
         { value: "technology", label: "Technology" },
@@ -25,6 +26,8 @@ const AddArticle = () => {
         { value: "health", label: "Health" },
         { value: "science", label: "Science" },
         { value: "sports", label: "Sports" },
+        { value: "tragedy", label: "Tragedy" },
+        { value: "trending", label: "Trending" },
     ];
 
     useEffect(() => {
@@ -60,37 +63,56 @@ const AddArticle = () => {
             return;
         }
 
-        // Upload image to imgbb
-        const imageForm = new FormData();
-        imageForm.append("image", imageFile);
+        try {
+            setIsLoading(true);
+            // Upload image to imgbb
+            const imageForm = new FormData();
+            imageForm.append("image", imageFile);
 
-        const res = await axiosPublic.post(image_hosting_api, imageForm, {
-            headers: {
-                "content-type": "multipart/form-data",
-            },
-        });
-        if (res.data.success) {
-            const articleData = {
-                title,
-                description,
-                tags: tags.map((tag) => tag.value),
-                publisher: selectedPublisher.value,
-                imageUrl: res.data.data.display_url,
-                isApproved: false,
-            };
-            const response = axiosSecure.post("/articles", articleData);
-            if (response.data.insertedId) {
+            const res = await axiosPublic.post(image_hosting_api, imageForm);
+
+            if (res.data.success) {
+                const articleData = {
+                    title,
+                    description,
+                    tags: tags.map((tag) => tag.value),
+                    publisher: selectedPublisher.value,
+                    imageUrl: res.data.data.display_url,
+                    isApproved: false,
+                };
+                const response = await axiosSecure.post(
+                    "/articles",
+                    articleData
+                );
+                console.log(response.data);
+                if (response.data.insertedId) {
+                    Swal.fire({
+                        title: "Success",
+                        text: "Article submitted successfully! Waiting for admin approval.",
+                        icon: "success",
+                        timer: 1500,
+                    });
+                    form.reset();
+                    setTags([]);
+                    setSelectedPublisher(null);
+                }
+            } else {
                 Swal.fire({
-                    title: "Success",
-                    text: "Article submitted successfully! Waiting for admin approval.",
-                    icon: "success",
-                    timer: 1500,
+                    title: "Error",
+                    text: "Failed to submit article. Please try again later.",
+                    icon: "error",
                 });
-                form.reset();
-                setTags([]);
-                setSelectedPublisher(null);
             }
+        } catch (err) {
+            Swal.fire({
+                title: "Error",
+                text:
+                    err.message ||
+                    "Failed to submit article. Please try again later.",
+                icon: "error",
+            });
         }
+        setIsLoading(false);
     };
 
     return (
@@ -197,7 +219,11 @@ const AddArticle = () => {
                                 type="submit"
                                 className="w-full py-3 text-white bg-black rounded-md hover:bg-gray-800"
                             >
-                                Submit Article
+                                {isLoading ? (
+                                    <span>Uploading...</span>
+                                ) : (
+                                    "Submit Article"
+                                )}
                             </Button>
                         </form>
                     </CardContent>

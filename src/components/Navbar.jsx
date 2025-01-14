@@ -1,8 +1,9 @@
+import { Button } from "@/components/ui/button.jsx";
 import { Link } from "react-router-dom";
 import useAdmin from "../hooks/useAdmin.jsx";
 import useAuth from "../hooks/useAuth.jsx";
 const Navbar = () => {
-    const { user } = useAuth();
+    const { user, logOut } = useAuth();
     const [isAdmin] = useAdmin();
 
     const links = (
@@ -32,13 +33,22 @@ const Navbar = () => {
                 Premium Articles
             </Link>
             {user ? (
-                <div className="w-10 rounded-full">
-                    <img
-                        src={user.photoURL}
-                        className="rounded-full"
-                        alt={user?.displayName}
-                    />
-                </div>
+                <>
+                    <div className="w-10 h-10">
+                        <img
+                            src={user.photoURL}
+                            className="object-cover w-full h-full rounded-full"
+                            alt={user?.displayName}
+                        />
+                    </div>
+                    <Button
+                        className="transition-all duration-300 ease-in-out rounded-full hover:bg-black hover:text-white"
+                        variant="outline"
+                        onClick={logOut}
+                    >
+                        Logout
+                    </Button>
+                </>
             ) : (
                 <>
                     <Link to="/login" className="hover:underline">
