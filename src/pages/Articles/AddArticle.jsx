@@ -61,13 +61,14 @@ const AddArticle = () => {
         }
 
         // Upload image to imgbb
+        const imageForm = new FormData();
+        imageForm.append("image", imageFile);
 
-        const res = await axiosPublic.post(image_hosting_api, imageFile, {
+        const res = await axiosPublic.post(image_hosting_api, imageForm, {
             headers: {
                 "content-type": "multipart/form-data",
             },
         });
-        console.log(res.data);
         if (res.data.success) {
             const articleData = {
                 title,
@@ -78,7 +79,7 @@ const AddArticle = () => {
                 isApproved: false,
             };
             const response = axiosSecure.post("/articles", articleData);
-            if ((await response).data.insertedId) {
+            if (response.data.insertedId) {
                 Swal.fire({
                     title: "Success",
                     text: "Article submitted successfully! Waiting for admin approval.",
