@@ -8,9 +8,10 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { useQuery } from "@tanstack/react-query";
+import { Helmet } from "react-helmet-async";
+import { FaCheck, FaStar, FaTimes, FaTrash } from "react-icons/fa";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../hooks/useAxiosSecure.jsx";
-
 const Articles = () => {
     const axiosSecure = useAxiosSecure();
 
@@ -18,7 +19,6 @@ const Articles = () => {
         queryKey: ["articles"],
         queryFn: async () => {
             const response = await axiosSecure.get("/articles");
-            console.log(response.data.articles);
             return response.data.articles;
         },
     });
@@ -47,11 +47,16 @@ const Articles = () => {
             showCancelButton: true,
             confirmButtonText: "Decline",
             cancelButtonText: "Cancel",
+            inputValidator: (value) => {
+                if (!value) {
+                    return "You need to provide a reason!";
+                }
+            },
         });
 
         if (reason) {
             try {
-                const res = await axiosSecure.patch(`/articles/${id}`, {
+                const res = await axiosSecure.patch(`/articles/${id}/decline`, {
                     declineReason: reason,
                 });
                 if (res.data.modifiedCount > 0) {
@@ -59,7 +64,7 @@ const Articles = () => {
                     refetch();
                 }
             } catch (err) {
-                Swal.fire(err.message, "Failed to decline article", "error");
+                Swal.fire("Error", err.message, "error");
             }
         }
     };
@@ -93,7 +98,7 @@ const Articles = () => {
 
     const handleMakePremium = async (id) => {
         try {
-            const res = await axiosSecure.patch(`/articles/${id}`);
+            const res = await axiosSecure.patch(`/articles/${id}/premium`);
             if (res.data.modifiedCount > 0) {
                 Swal.fire("Success", "Article made premium!", "success");
                 refetch();
@@ -104,84 +109,128 @@ const Articles = () => {
     };
 
     return (
-        <div className="p-4">
-            <h1 className="mb-4 text-xl font-bold">Admin - All Articles</h1>
-            <Table>
-                <TableHeader>
-                    <TableRow>
-                        <TableHead>Title</TableHead>
-                        <TableHead>Author</TableHead>
-                        <TableHead>Posted Date</TableHead>
-                        <TableHead>Publisher</TableHead>
-                        <TableHead>Status</TableHead>
-                        <TableHead>Actions</TableHead>
-                    </TableRow>
-                </TableHeader>
-                <TableBody>
-                    {articles.map((article) => (
-                        <TableRow key={article._id}>
-                            <TableCell>{article.title}</TableCell>
-                            <TableCell>{article.author}</TableCell>
-                            <TableCell>
-                                {new Date(
-                                    article.createdAt
-                                ).toLocaleDateString()}
-                            </TableCell>
-                            <TableCell>{article.publisher}</TableCell>
-                            <TableCell>
-                                {article.isApproved ? "Approved" : "Pending"}
-                            </TableCell>
-                            <TableCell>
-                                <div className="flex space-x-2">
-                                    {!article.isApproved && (
-                                        <Button
-                                            onClick={() =>
-                                                handleApproveArticle(
-                                                    article._id
-                                                )
-                                            }
-                                            className="text-green-600"
-                                        >
-                                            Approve
-                                        </Button>
-                                    )}
-                                    {!article.isApproved && (
-                                        <Button
-                                            onClick={() =>
-                                                handleDeclineArticle(
-                                                    article._id
-                                                )
-                                            }
-                                            className="text-red-600"
-                                        >
-                                            Decline
-                                        </Button>
-                                    )}
-                                    <Button
-                                        onClick={() =>
-                                            handleDeleteArticle(article._id)
-                                        }
-                                        className="text-gray-600"
-                                    >
-                                        Delete
-                                    </Button>
-                                    {!article.isPremium && (
-                                        <Button
-                                            onClick={() =>
-                                                handleMakePremium(article._id)
-                                            }
-                                            className="text-yellow-600"
-                                        >
-                                            Make Premium
-                                        </Button>
-                                    )}
-                                </div>
-                            </TableCell>
+        <>
+            <Helmet>
+                <title>Dashboard - All Articles</title>
+            </Helmet>
+            <div className="p-4 font-poppins">
+                <h1 className="mb-4 text-xl font-bold">Admin - All Articles</h1>
+                <Table>
+                    <TableHeader>
+                        <TableRow>
+                            <TableHead>Title</TableHead>
+                            <TableHead>Author</TableHead>
+                            <TableHead>Posted Date</TableHead>
+                            <TableHead>Publisher</TableHead>
+                            <TableHead>Status</TableHead>
+                            <TableHead>Actions</TableHead>
                         </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
-        </div>
+                    </TableHeader>
+                    <TableBody>
+                        {articles.map((article) => {
+                            const isDeclined = !!article.declineReason;
+                            const isApproved = article.isApproved;
+
+                            return (
+                                <TableRow key={article._id}>
+                                    <TableCell>
+                                        <div
+                                            className="w-40 truncate"
+                                            title={article.title}
+                                        >
+                                            {article.title}
+                                        </div>
+                                    </TableCell>
+                                    <TableCell>{article.author}</TableCell>
+                                    <TableCell>
+                                        {new Date(
+                                            article.createdAt
+                                        ).toLocaleDateString()}
+                                    </TableCell>
+                                    <TableCell>{article.publisher}</TableCell>
+                                    <TableCell>
+                                        <span
+                                            className={`px-2 py-1 rounded-full text-sm font-semibold ${
+                                                isApproved
+                                                    ? "bg-green-100 text-green-800"
+                                                    : isDeclined
+                                                    ? "bg-red-100 text-red-800"
+                                                    : "bg-yellow-100 text-yellow-800"
+                                            }`}
+                                        >
+                                            {isApproved
+                                                ? "Approved"
+                                                : isDeclined
+                                                ? "Declined"
+                                                : "Pending"}
+                                        </span>
+                                    </TableCell>
+                                    <TableCell>
+                                        <div className="flex space-x-2">
+                                            <Button
+                                                // className="border rounded-full"
+                                                // variant="primary"
+                                                title="Approve Article"
+                                                onClick={() =>
+                                                    handleApproveArticle(
+                                                        article._id
+                                                    )
+                                                }
+                                                disabled={
+                                                    isApproved || isDeclined
+                                                }
+                                            >
+                                                <FaCheck />
+                                            </Button>
+                                            <Button
+                                                title="Decline Article"
+                                                // className="rounded-full"
+                                                onClick={() =>
+                                                    handleDeclineArticle(
+                                                        article._id
+                                                    )
+                                                }
+                                                disabled={
+                                                    isApproved || isDeclined
+                                                }
+                                            >
+                                                <FaTimes />
+                                            </Button>
+                                            <Button
+                                                variant="destructive"
+                                                title="Delete Article"
+                                                // className="rounded-full"
+                                                onClick={() =>
+                                                    handleDeleteArticle(
+                                                        article._id
+                                                    )
+                                                }
+                                            >
+                                                <FaTrash />
+                                            </Button>
+                                            {!article.isPremium && (
+                                                <Button
+                                                    title="Make Article Premium"
+                                                    // className="rounded-full"
+                                                    onClick={() =>
+                                                        handleMakePremium(
+                                                            article._id
+                                                        )
+                                                    }
+                                                    disabled={isDeclined}
+                                                >
+                                                    <FaStar />
+                                                </Button>
+                                            )}
+                                        </div>
+                                    </TableCell>
+                                </TableRow>
+                            );
+                        })}
+                    </TableBody>
+                </Table>
+            </div>
+        </>
     );
 };
 

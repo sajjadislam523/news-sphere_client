@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label";
 import useAxiosPublic from "@/hooks/useAxiosPublic";
 import useAxiosSecure from "@/hooks/useAxiosSecure";
 import { useState } from "react";
+import { Helmet } from "react-helmet-async";
 import Swal from "sweetalert2";
 
 const imageHostingKey = import.meta.env.VITE_image_upload_key;
@@ -78,65 +79,70 @@ const AddPublishers = () => {
     };
 
     return (
-        <div className="flex items-center justify-center min-h-screen px-4 bg-gray-100 sm:px-6 lg:px-8 font-poppins">
-            <div className="w-full max-w-md">
-                <Card>
-                    <CardHeader className="p-4">
-                        <CardTitle className="text-2xl text-center">
-                            Add Publisher
-                        </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <form onSubmit={handleSubmit} className="space-y-6">
-                            {/* Publisher Name */}
-                            <div>
-                                <Label
-                                    htmlFor="name"
-                                    className="text-sm font-semibold"
-                                >
-                                    Publisher Name
-                                </Label>
-                                <Input
-                                    type="text"
-                                    name="name"
-                                    placeholder="Enter publisher name"
-                                    className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                />
-                            </div>
+        <>
+            <Helmet>
+                <title>Dashboard - Add Publishers</title>
+            </Helmet>
+            <div className="flex items-center justify-center min-h-screen px-4 bg-gray-100 sm:px-6 lg:px-8 font-poppins">
+                <div className="w-full max-w-md">
+                    <Card>
+                        <CardHeader className="p-4">
+                            <CardTitle className="text-2xl text-center">
+                                Add Publisher
+                            </CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <form onSubmit={handleSubmit} className="space-y-6">
+                                {/* Publisher Name */}
+                                <div>
+                                    <Label
+                                        htmlFor="name"
+                                        className="text-sm font-semibold"
+                                    >
+                                        Publisher Name
+                                    </Label>
+                                    <Input
+                                        type="text"
+                                        name="name"
+                                        placeholder="Enter publisher name"
+                                        className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    />
+                                </div>
 
-                            {/* Publisher Logo */}
-                            <div>
-                                <Label
-                                    htmlFor="logo"
-                                    className="text-sm font-semibold"
-                                >
-                                    Publisher Logo
-                                </Label>
-                                <Input
-                                    type="file"
-                                    name="logo"
-                                    accept="image/*"
-                                    className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                />
-                            </div>
+                                {/* Publisher Logo */}
+                                <div>
+                                    <Label
+                                        htmlFor="logo"
+                                        className="text-sm font-semibold"
+                                    >
+                                        Publisher Logo
+                                    </Label>
+                                    <Input
+                                        type="file"
+                                        name="logo"
+                                        accept="image/*"
+                                        className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    />
+                                </div>
 
-                            {/* Submit Button */}
-                            <Button
-                                type="submit"
-                                disabled={loading}
-                                className={`w-full py-3 text-white ${
-                                    loading
-                                        ? "bg-gray-400"
-                                        : "bg-black hover:bg-gray-800"
-                                } rounded-md`}
-                            >
-                                {loading ? "Adding..." : "Add Publisher"}
-                            </Button>
-                        </form>
-                    </CardContent>
-                </Card>
+                                {/* Submit Button */}
+                                <Button
+                                    type="submit"
+                                    disabled={loading}
+                                    className={`w-full py-3 text-white ${
+                                        loading
+                                            ? "bg-gray-400"
+                                            : "bg-black hover:bg-gray-800"
+                                    } rounded-md`}
+                                >
+                                    {loading ? "Adding..." : "Add Publisher"}
+                                </Button>
+                            </form>
+                        </CardContent>
+                    </Card>
+                </div>
             </div>
-        </div>
+        </>
     );
 };
 

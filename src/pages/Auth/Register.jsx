@@ -60,6 +60,7 @@ const Register = () => {
                     name: name,
                     email: email,
                     isAdmin: false,
+                    photoURL: photoURL,
                 };
                 console.log(userInfo.isAdmin);
                 axiosPublic
