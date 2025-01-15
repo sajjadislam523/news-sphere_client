@@ -44,6 +44,7 @@ const AddPublishers = () => {
 
                 // Save publisher data
                 const publisherData = { name, logo: logoUrl };
+
                 const res = await axiosSecure.post(
                     "/publishers",
                     publisherData

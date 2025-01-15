@@ -6,6 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useEffect, useState } from "react";
 import Select from "react-select";
 import Swal from "sweetalert2";
+import useAuth from "../../hooks/useAuth.jsx";
 import useAxiosPublic from "../../hooks/useAxiosPublic.jsx";
 import useAxiosSecure from "../../hooks/useAxiosSecure.jsx";
 
@@ -15,10 +16,11 @@ const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_ke
 const AddArticle = () => {
     const [tags, setTags] = useState([]);
     const [publishers, setPublishers] = useState([]);
-    const [selectedPublisher, setSelectedPublisher] = useState("");
+    const [selectedPublisher, setSelectedPublisher] = useState([]);
     const axiosSecure = useAxiosSecure();
     const axiosPublic = useAxiosPublic();
     const [isLoading, setIsLoading] = useState(false);
+    const { user } = useAuth();
 
     const tagOptions = [
         { value: "technology", label: "Technology" },
@@ -33,7 +35,7 @@ const AddArticle = () => {
     useEffect(() => {
         axiosSecure.get("/publishers").then((res) => {
             const options = res.data.map((publisher) => ({
-                value: publisher.id,
+                logo: publisher.logo,
                 label: publisher.name,
             }));
             setPublishers(options);
@@ -69,22 +71,28 @@ const AddArticle = () => {
             const imageForm = new FormData();
             imageForm.append("image", imageFile);
 
-            const res = await axiosPublic.post(image_hosting_api, imageForm);
+            const imgRes = await axiosPublic.post(image_hosting_api, imageForm);
 
-            if (res.data.success) {
+            if (imgRes.data.success) {
+                const img = imgRes.data.data.display_url;
+
                 const articleData = {
                     title,
                     description,
                     tags: tags.map((tag) => tag.value),
                     publisher: selectedPublisher.value,
-                    imageUrl: res.data.data.display_url,
+                    imageUrl: img,
                     isApproved: false,
+                    isPremium: false,
+                    author: user.email,
+                    createdAt: new Date(),
+                    views: 0,
                 };
+
                 const response = await axiosSecure.post(
                     "/articles",
                     articleData
                 );
-                console.log(response.data);
                 if (response.data.insertedId) {
                     Swal.fire({
                         title: "Success",

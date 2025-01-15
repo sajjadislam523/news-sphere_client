@@ -3,7 +3,7 @@ import { NavLink, Outlet } from "react-router-dom";
 const DashboardLayout = () => {
     const routes = [
         { path: "/", label: "Home" },
-        { path: "dashboard", label: "Dashboard" },
+        { path: "", label: "Dashboard" },
         { path: "all-users", label: "All Users" },
         { path: "all-articles", label: "All Articles" },
         { path: "add-publishers", label: "Add Publishers" },

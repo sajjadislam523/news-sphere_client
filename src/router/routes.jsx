@@ -4,11 +4,15 @@ import MainLayout from "../layouts/MainLayout.jsx";
 import AddPublishers from "../pages/Admin/AddPublishers.jsx";
 import AdminHome from "../pages/Admin/AdminHome.jsx";
 import AllUsers from "../pages/Admin/AllUsers.jsx";
+import Articles from "../pages/Admin/Articles.jsx";
 import AddArticle from "../pages/Articles/AddArticle.jsx";
 import AllArticles from "../pages/Articles/AllArticles.jsx";
+import MyArticles from "../pages/Articles/MyArticles.jsx";
+import PremiumArticles from "../pages/Articles/PremiumArticles.jsx";
 import Login from "../pages/Auth/Login.jsx";
 import Register from "../pages/Auth/Register.jsx";
 import Home from "../pages/Home/Home.jsx";
+import Subscription from "../pages/Subscription/Subscription.jsx";
 import PrivateRoute from "./PrivateRoute.jsx";
 
 const routes = createBrowserRouter([
@@ -37,6 +41,22 @@ const routes = createBrowserRouter([
                 ),
             },
             {
+                path: "/allArticles",
+                element: <AllArticles />,
+            },
+            {
+                path: "/subscription",
+                element: <Subscription />,
+            },
+            {
+                path: "/myArticles",
+                element: <MyArticles />,
+            },
+            {
+                path: "/premiumArticles",
+                element: <PremiumArticles />,
+            },
+            {
                 path: "*",
                 element: <div>404 Not Found</div>,
             },
@@ -51,7 +71,7 @@ const routes = createBrowserRouter([
         ),
         children: [
             {
-                path: "dashboard",
+                path: "",
                 element: <AdminHome />,
             },
             {
@@ -60,7 +80,7 @@ const routes = createBrowserRouter([
             },
             {
                 path: "all-articles",
-                element: <AllArticles />,
+                element: <Articles />,
             },
             {
                 path: "add-publishers",
