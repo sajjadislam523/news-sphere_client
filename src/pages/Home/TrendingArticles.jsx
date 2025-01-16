@@ -1,4 +1,6 @@
+import { Button } from "@/components/ui/button.jsx";
 import { useQuery } from "@tanstack/react-query";
+import { Link } from "react-router-dom";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -21,7 +23,6 @@ const TrendingArticles = () => {
             const sortedData = res.data.articles
                 .sort((a, b) => b.views - a.views)
                 .slice(0, 6);
-            console.log(sortedData);
             return sortedData;
         },
     });
@@ -32,7 +33,9 @@ const TrendingArticles = () => {
 
     return (
         <div className="py-6">
-            <h2 className="mb-4 text-2xl font-bold">Trending Articles</h2>
+            <h2 className="mb-4 text-2xl font-bold font-poppins">
+                Trending Articles
+            </h2>
             <Swiper
                 modules={[Navigation, Pagination, Autoplay]}
                 spaceBetween={20}
@@ -49,18 +52,30 @@ const TrendingArticles = () => {
             >
                 {articles.map((article) => (
                     <SwiperSlide key={article._id}>
-                        <div className="p-4 border rounded-md shadow-sm">
-                            <img
-                                src={article.imageUrl}
-                                alt={article.title}
-                                className="object-cover w-full h-40 mb-2 rounded-md"
-                            />
-                            <h3 className="mb-2 text-lg font-semibold">
-                                {article.title}
-                            </h3>
-                            <p className="text-sm text-gray-600 truncate">
-                                {article.description}
-                            </p>
+                        <div className="flex flex-col justify-between h-full p-4 bg-white border rounded-md shadow-md">
+                            <div>
+                                <img
+                                    src={article.imageUrl}
+                                    alt={article.title}
+                                    className="object-cover w-full h-40 mb-4 rounded-md"
+                                />
+                                <h3 className="mb-2 text-lg font-semibold font-merriweather">
+                                    {article.title}
+                                </h3>
+                                <p className="text-sm text-gray-600 truncate font-poppins">
+                                    {article.description}
+                                </p>
+                            </div>
+                            <div className="mt-4 text-right">
+                                <Link to={`/articleDetails/${article._id}`}>
+                                    <Button
+                                        variant="outline"
+                                        className="text-sm font-poppins hover:underline"
+                                    >
+                                        Details
+                                    </Button>
+                                </Link>
+                            </div>
                         </div>
                     </SwiperSlide>
                 ))}
