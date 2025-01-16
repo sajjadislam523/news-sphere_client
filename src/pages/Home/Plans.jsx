@@ -7,9 +7,14 @@ const Plans = () => {
 
     return (
         <div className="py-6">
-            <h2 className="mb-8 text-3xl font-extrabold text-center text-gray-800">
-                Our Plans
-            </h2>
+            <div className="mb-8">
+                <h2 className="mb-2 text-3xl font-semibold text-center font-merriweather">
+                    Our Plans
+                </h2>
+                <p className="mb-8 text-center text-gray-600 font-merriweather">
+                    Choose the Best Plan for You
+                </p>
+            </div>
             <div className="grid grid-cols-1 gap-6 md:grid-cols-3 font-poppins">
                 {/* Plans card */}
                 <Card className="flex flex-col justify-between border border-gray-300">

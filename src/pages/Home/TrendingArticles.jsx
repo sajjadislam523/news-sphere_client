@@ -33,7 +33,7 @@ const TrendingArticles = () => {
 
     return (
         <div className="py-6">
-            <h2 className="mb-4 text-2xl font-bold font-poppins">
+            <h2 className="my-4 text-2xl font-bold text-center font-merriweather">
                 Trending Articles
             </h2>
             <Swiper

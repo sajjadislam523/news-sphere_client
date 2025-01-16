@@ -19,19 +19,26 @@ const AllPublishers = () => {
 
     return (
         <div className="py-6">
-            <h2 className="mb-4 text-2xl font-bold">All Publishers</h2>
-            <div className="grid grid-cols-3 gap-4">
+            <div className="mb-8">
+                <h2 className="mb-2 text-2xl font-bold text-center font-merriweather">
+                    All Publishers
+                </h2>
+                <p className="font-medium text-center text-gray-600 font-merriweather">
+                    See all the renowned news publishers across the globe.
+                </p>
+            </div>
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {publishers.map((publisher) => (
                     <div
                         key={publisher._id}
-                        className="p-4 text-center border rounded-md shadow-sm"
+                        className="p-6 text-center transition-shadow duration-300 bg-white border rounded-lg shadow-lg hover:shadow-xl"
                     >
                         <img
                             src={publisher.logo}
                             alt={publisher.name}
-                            className="w-24 h-24 mx-auto mb-4"
+                            className="object-cover w-20 h-20 mx-auto mb-4 rounded-full"
                         />
-                        <h3 className="text-lg font-semibold">
+                        <h3 className="text-lg font-semibold text-gray-800 font-poppins">
                             {publisher.name}
                         </h3>
                     </div>

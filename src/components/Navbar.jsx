@@ -21,7 +21,7 @@ const Navbar = () => {
                 Subscription
             </Link>
             {user && isAdmin ? (
-                <Link to="/dashboard" className="hover:underline">
+                <Link to="/dashboard/home" className="hover:underline">
                     Dashboard
                 </Link>
             ) : null}
