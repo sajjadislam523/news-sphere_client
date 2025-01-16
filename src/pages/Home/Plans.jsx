@@ -7,7 +7,9 @@ const Plans = () => {
 
     return (
         <div className="py-6">
-            <h2 className="mb-4 text-2xl font-bold font-poppins">Our Plans</h2>
+            <h2 className="mb-8 text-3xl font-extrabold text-center text-gray-800">
+                Our Plans
+            </h2>
             <div className="grid grid-cols-1 gap-6 md:grid-cols-3 font-poppins">
                 {/* Plans card */}
                 <Card className="flex flex-col justify-between border border-gray-300">
