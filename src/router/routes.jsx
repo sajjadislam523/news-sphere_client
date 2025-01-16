@@ -2,9 +2,9 @@ import { createBrowserRouter } from "react-router-dom";
 import DashboardLayout from "../layouts/DashboardLayout.jsx";
 import MainLayout from "../layouts/MainLayout.jsx";
 import AddPublishers from "../pages/Admin/AddPublishers.jsx";
-import AdminHome from "../pages/Admin/AdminHome.jsx";
 import AllUsers from "../pages/Admin/AllUsers.jsx";
 import Articles from "../pages/Admin/Articles.jsx";
+import Dashboard from "../pages/Admin/Dashboard.jsx";
 import AddArticle from "../pages/Articles/AddArticle.jsx";
 import AllArticles from "../pages/Articles/AllArticles.jsx";
 import MyArticles from "../pages/Articles/MyArticles.jsx";
@@ -71,8 +71,8 @@ const routes = createBrowserRouter([
         ),
         children: [
             {
-                path: "",
-                element: <AdminHome />,
+                path: "home",
+                element: <Dashboard />,
             },
             {
                 path: "all-users",
