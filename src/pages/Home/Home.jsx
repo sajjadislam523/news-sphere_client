@@ -1,10 +1,11 @@
 import AllPublishers from "./AllPublishers.jsx";
 import Plans from "./Plans.jsx";
+import TrendingArticles from "./TrendingArticles.jsx";
 
 const Home = () => {
     return (
         <div className="container px-6 mx-auto">
-            {/* <TrendingArticles /> */}
+            <TrendingArticles />
             <AllPublishers />
             {/* <Statistics /> */}
             <Plans />

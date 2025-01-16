@@ -9,7 +9,6 @@ const AllPublishers = () => {
         queryKey: ["publishers"],
         queryFn: async () => {
             const res = await axiosSecure.get("/publishers");
-            console.log(res.data);
             return res.data;
         },
     });

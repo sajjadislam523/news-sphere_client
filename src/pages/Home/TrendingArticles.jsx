@@ -1,5 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
-import Slider from "react-slick";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import { Autoplay, Navigation, Pagination } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
 import Loading from "../../components/Loading.jsx";
 import useAxiosSecure from "../../hooks/useAxiosSecure.jsx";
 
@@ -9,7 +13,11 @@ const TrendingArticles = () => {
     const { data: articles = [], isLoading } = useQuery({
         queryKey: ["trendingArticles"],
         queryFn: async () => {
-            const res = await axiosSecure.get("/articles");
+            const res = await axiosSecure.get("/articles", {
+                params: {
+                    isApproved: true,
+                },
+            });
             const sortedData = res.data.articles
                 .sort((a, b) => b.views - a.views)
                 .slice(0, 6);
@@ -22,32 +30,41 @@ const TrendingArticles = () => {
         return <Loading />;
     }
 
-    const sliderSettings = {
-        dots: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 3,
-        slidesToScroll: 1,
-    };
-
     return (
         <div className="py-6">
             <h2 className="mb-4 text-2xl font-bold">Trending Articles</h2>
-            <Slider {...sliderSettings}>
+            <Swiper
+                modules={[Navigation, Pagination, Autoplay]}
+                spaceBetween={20}
+                slidesPerView={3}
+                navigation
+                pagination={{ clickable: true }}
+                autoplay={{ delay: 2500, disableOnInteraction: false }}
+                breakpoints={{
+                    480: { slidesPerView: 1, spaceBetween: 10 },
+                    768: { slidesPerView: 2, spaceBetween: 15 },
+                    1024: { slidesPerView: 3, spaceBetween: 20 },
+                    1440: { slidesPerView: 4, spaceBetween: 25 },
+                }}
+            >
                 {articles.map((article) => (
-                    <div key={article._id} className="p-4">
-                        <img
-                            src={article.imageUrl}
-                            alt={article.title}
-                            className="mb-2 rounded-md"
-                        />
-                        <h3 className="text-lg font-semibold">
-                            {article.title}
-                        </h3>
-                        <p>{article.summary}</p>
-                    </div>
+                    <SwiperSlide key={article._id}>
+                        <div className="p-4 border rounded-md shadow-sm">
+                            <img
+                                src={article.imageUrl}
+                                alt={article.title}
+                                className="object-cover w-full h-40 mb-2 rounded-md"
+                            />
+                            <h3 className="mb-2 text-lg font-semibold">
+                                {article.title}
+                            </h3>
+                            <p className="text-sm text-gray-600 truncate">
+                                {article.description}
+                            </p>
+                        </div>
+                    </SwiperSlide>
                 ))}
-            </Slider>
+            </Swiper>
         </div>
     );
 };
