@@ -13,7 +13,7 @@ import PremiumArticles from "../pages/Articles/PremiumArticles.jsx";
 import Login from "../pages/Auth/Login.jsx";
 import Register from "../pages/Auth/Register.jsx";
 import Home from "../pages/Home/Home.jsx";
-import Subscription from "../pages/Subscription/Subscription.jsx";
+import Payment from "../pages/Subscription/Payment.jsx";
 import PrivateRoute from "./PrivateRoute.jsx";
 
 const routes = createBrowserRouter([
@@ -49,7 +49,7 @@ const routes = createBrowserRouter([
                 path: "/subscription",
                 element: (
                     <PrivateRoute>
-                        <Subscription />,
+                        <Payment />,
                     </PrivateRoute>
                 ),
             },

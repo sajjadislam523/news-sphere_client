@@ -63,7 +63,6 @@ const Register = () => {
                     photoURL: photoURL,
                     isSubscribed: false,
                 };
-                console.log(userInfo.isAdmin);
                 axiosPublic
                     .post("/users", userInfo)
                     .then((res) => {

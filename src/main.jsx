@@ -5,6 +5,7 @@ import { HelmetProvider } from "react-helmet-async";
 import { RouterProvider } from "react-router-dom";
 import "./index.css";
 import AuthProvider from "./providers/AuthProvider.jsx";
+import SubscriptionsProvider from "./providers/SubscriptionsProvider.jsx";
 import routes from "./router/Routes.jsx";
 
 const queryClient = new QueryClient();
@@ -14,7 +15,9 @@ createRoot(document.getElementById("root")).render(
         <HelmetProvider>
             <QueryClientProvider client={queryClient}>
                 <AuthProvider>
-                    <RouterProvider router={routes} />
+                    <SubscriptionsProvider>
+                        <RouterProvider router={routes} />
+                    </SubscriptionsProvider>
                 </AuthProvider>
             </QueryClientProvider>
         </HelmetProvider>

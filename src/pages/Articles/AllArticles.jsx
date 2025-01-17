@@ -1,17 +1,17 @@
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import ArticleCard from "../../components/ArticleCard.jsx";
 import useAxiosSecure from "../../hooks/useAxiosSecure.jsx";
+import useSubscription from "../../hooks/useSubscription.jsx";
 
 const AllArticles = () => {
     const [page, setPage] = useState(1);
     const [limit] = useState(10);
     const [searchQuery, setSearchQuery] = useState("");
     const [publisherFilter, setPublisherFilter] = useState("");
-    const navigate = useNavigate();
     const axiosSecure = useAxiosSecure();
-    const isSubscribed = false;
+    const subscriptionStatus = useSubscription();
 
     const { data: articlesData, isLoading: articlesLoading } = useQuery({
         queryKey: ["articles", page, limit, publisherFilter, searchQuery],
@@ -95,49 +95,11 @@ const AllArticles = () => {
             ) : (
                 <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                     {articles.map((article) => (
-                        <div
+                        <ArticleCard
                             key={article._id}
-                            className={`p-4 border rounded-md shadow-sm ${
-                                article.isPremium
-                                    ? "border-yellow-400 bg-yellow-50"
-                                    : "border-gray-300"
-                            }`}
-                        >
-                            <img
-                                src={article.imageUrl}
-                                alt={article.title}
-                                className="object-cover w-full h-40 mb-4 rounded-md"
-                            />
-                            <h3 className="mb-2 text-lg font-bold font-merriweather">
-                                {article.title}
-                            </h3>
-                            <p className="mb-4 text-sm text-gray-600">
-                                {article.description.slice(0, 100)}...
-                            </p>
-                            <p className="mb-4 text-xs text-gray-500">
-                                Publisher: {article.publisher}
-                            </p>
-                            <Button
-                                variant="outline"
-                                className={`w-full ${
-                                    article.isPremium && !isSubscribed
-                                        ? "opacity-50 cursor-not-allowed"
-                                        : ""
-                                }`}
-                                onClick={() =>
-                                    !article.isPremium || isSubscribed
-                                        ? navigate(
-                                              `/articleDetails/${article._id}`
-                                          )
-                                        : null
-                                }
-                                disabled={article.isPremium && !isSubscribed}
-                            >
-                                {article.isPremium && !isSubscribed
-                                    ? "Subscribe to View"
-                                    : "Details"}
-                            </Button>
-                        </div>
+                            article={article}
+                            subscriptionStatus={subscriptionStatus}
+                        />
                     ))}
                 </div>
             )}
