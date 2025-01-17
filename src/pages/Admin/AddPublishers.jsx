@@ -93,7 +93,6 @@ const AddPublishers = () => {
                         </CardHeader>
                         <CardContent>
                             <form onSubmit={handleSubmit} className="space-y-6">
-                                {/* Publisher Name */}
                                 <div>
                                     <Label
                                         htmlFor="name"
@@ -109,7 +108,6 @@ const AddPublishers = () => {
                                     />
                                 </div>
 
-                                {/* Publisher Logo */}
                                 <div>
                                     <Label
                                         htmlFor="logo"
@@ -125,7 +123,6 @@ const AddPublishers = () => {
                                     />
                                 </div>
 
-                                {/* Submit Button */}
                                 <Button
                                     type="submit"
                                     disabled={loading}

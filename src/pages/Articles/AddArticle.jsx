@@ -30,6 +30,7 @@ const AddArticle = () => {
         { value: "sports", label: "Sports" },
         { value: "tragedy", label: "Tragedy" },
         { value: "trending", label: "Trending" },
+        { value: "politics", label: "Politics" },
     ];
 
     useEffect(() => {
