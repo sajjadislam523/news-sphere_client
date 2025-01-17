@@ -49,7 +49,7 @@ const routes = createBrowserRouter([
                 path: "/subscription",
                 element: (
                     <PrivateRoute>
-                        <Payment />,
+                        <Payment />
                     </PrivateRoute>
                 ),
             },
@@ -57,7 +57,7 @@ const routes = createBrowserRouter([
                 path: "/myArticles",
                 element: (
                     <PrivateRoute>
-                        <MyArticles />,
+                        <MyArticles />
                     </PrivateRoute>
                 ),
             },
@@ -65,7 +65,7 @@ const routes = createBrowserRouter([
                 path: "/premiumArticles",
                 element: (
                     <PrivateRoute>
-                        <PremiumArticles />,
+                        <PremiumArticles />
                     </PrivateRoute>
                 ),
             },
