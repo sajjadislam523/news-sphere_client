@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useState } from "react";
 import Swal from "sweetalert2";
+import subscriptionGif from "../../assets/subscriptionsGif.gif";
 import useAuth from "../../hooks/useAuth.jsx";
 import useAxiosSecure from "../../hooks/useAxiosSecure.jsx";
 
@@ -95,43 +96,64 @@ const Subscription = () => {
 
     return (
         <div className="container p-6 mx-auto">
-            <h1 className="mb-6 text-3xl font-bold text-center">
+            <h1 className="mb-4 text-4xl font-extrabold text-center text-gray-900">
                 Choose Your Subscription Plan
             </h1>
-            <div className="flex flex-col items-center space-y-4">
-                {/* Subscription Period Selection */}
-                <div className="w-full max-w-sm">
-                    <label htmlFor="period" className="block mb-2 text-lg">
-                        Subscription Period:
-                    </label>
-                    <select
-                        id="period"
-                        value={period}
-                        onChange={(e) => setPeriod(parseInt(e.target.value))}
-                        className="w-full p-2 border rounded"
-                    >
-                        <option value={1}>1 Minute - $1</option>
-                        <option value={7200}>5 Days - $5</option>
-                        <option value={14400}>10 Days - $10</option>
-                    </select>
+
+            <h2 className="mb-12 text-xl font-semibold text-center text-gray-700">
+                Select a plan that suits your needs and get started instantly.
+            </h2>
+
+            <div className="grid grid-cols-1 gap-8 mb-8 lg:grid-cols-2">
+                {/* GIF Section */}
+                <div className="flex justify-center">
+                    <img
+                        src={subscriptionGif}
+                        alt="Subscription Banner"
+                        className="w-full rounded-lg shadow-md lg:w-3/4"
+                    />
                 </div>
 
-                {/* Payment Form */}
-                <div className="w-full max-w-md p-4 border rounded shadow">
-                    <h2 className="mb-4 text-lg font-semibold">
-                        Enter Your Payment Details
-                    </h2>
-                    <div className="mb-4">
-                        <CardElement options={{ hidePostalCode: true }} />
+                <div className="flex flex-col items-center space-y-8">
+                    <div className="w-full max-w-md">
+                        <label
+                            htmlFor="period"
+                            className="block mb-4 text-lg font-semibold text-gray-700"
+                        >
+                            Subscription Period:
+                        </label>
+                        <select
+                            id="period"
+                            value={period}
+                            onChange={(e) =>
+                                setPeriod(parseInt(e.target.value))
+                            }
+                            className="w-full p-3 transition duration-300 ease-in-out bg-white border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none hover:bg-gray-100"
+                        >
+                            <option value={1}>1 Minute - $1</option>
+                            <option value={7200}>5 Days - $5</option>
+                            <option value={14400}>10 Days - $10</option>
+                        </select>
                     </div>
-                    <Button
-                        variant="primary"
-                        className="w-full"
-                        onClick={handleSubscription}
-                        disabled={loading || !stripe || !elements}
-                    >
-                        {loading ? "Processing..." : "Subscribe Now"}
-                    </Button>
+
+                    <div className="w-full max-w-md p-6 bg-white border border-gray-300 shadow-lg rounded-xl">
+                        <h2 className="mb-6 text-xl font-semibold text-gray-800">
+                            Enter Your Payment Details
+                        </h2>
+
+                        <div className="mb-6">
+                            <CardElement options={{ hidePostalCode: true }} />
+                        </div>
+
+                        <Button
+                            variant="outline"
+                            className="w-full px-6 py-3 text-lg font-semibold text-black transition duration-300 ease-in-out bg-white border-2 border-black rounded-lg shadow-md hover:bg-black hover:text-white focus:outline-none focus:ring-2 focus:ring-black active:bg-gray-800"
+                            onClick={handleSubscription}
+                            disabled={loading || !stripe || !elements}
+                        >
+                            {loading ? "Processing..." : "Subscribe Now"}
+                        </Button>
+                    </div>
                 </div>
             </div>
         </div>
