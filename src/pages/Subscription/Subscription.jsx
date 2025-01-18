@@ -16,8 +16,8 @@ const Subscription = () => {
 
     const prices = {
         1: 100,
-        5: 500,
-        10: 1000,
+        7200: 500,
+        14400: 1000,
     };
 
     const handleSubscription = async () => {
@@ -32,6 +32,10 @@ const Subscription = () => {
         setLoading(true);
 
         try {
+            const timezoneOffset = 360;
+
+            const adjustedPeriod = period + timezoneOffset;
+
             const { data } = await axiosSecure.post("/create-payment-intent", {
                 amount: prices[period],
             });
@@ -68,8 +72,9 @@ const Subscription = () => {
                 });
             } else if (result.paymentIntent.status === "succeeded") {
                 await axiosSecure.patch(`/users/subscribe/${user?.email}`, {
-                    period: period * 1440,
+                    period: adjustedPeriod,
                 });
+                console.log("Sent adjusted period:", adjustedPeriod);
 
                 Swal.fire({
                     title: "Subscription Successful",
@@ -106,8 +111,8 @@ const Subscription = () => {
                         className="w-full p-2 border rounded"
                     >
                         <option value={1}>1 Minute - $1</option>
-                        <option value={5}>5 Days - $5</option>
-                        <option value={10}>10 Days - $10</option>
+                        <option value={7200}>5 Days - $5</option>
+                        <option value={14400}>10 Days - $10</option>
                     </select>
                 </div>
 

@@ -40,7 +40,12 @@ const Login = () => {
 
         logIn(email, password)
             .then((res) => {
-                console.log(res.user);
+                Swal.fire({
+                    title: "Login Successful",
+                    text: `${res.user.displayName} has successfully logged in`,
+                    icon: "success",
+                    timer: 1500,
+                });
             })
             .catch((err) => {
                 const errorMessage = getErrorMessage(err.code);
