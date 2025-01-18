@@ -100,12 +100,11 @@ const Subscription = () => {
                 Choose Your Subscription Plan
             </h1>
 
-            <h2 className="mb-12 text-xl font-semibold text-center text-gray-700">
+            <h2 className="mb-12 text-lg font-semibold text-center text-gray-700">
                 Select a plan that suits your needs and get started instantly.
             </h2>
 
             <div className="grid grid-cols-1 gap-8 mb-8 lg:grid-cols-2">
-                {/* GIF Section */}
                 <div className="flex justify-center">
                     <img
                         src={subscriptionGif}
