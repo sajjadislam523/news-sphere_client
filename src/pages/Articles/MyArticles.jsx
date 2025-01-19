@@ -130,8 +130,7 @@ const MyArticles = () => {
                                             <span className="px-2 py-1 text-sm font-medium text-white bg-green-500 rounded">
                                                 Approved
                                             </span>
-                                        ) : article.isApproved ===
-                                          "declined" ? (
+                                        ) : article.declineReason ? (
                                             <div className="flex items-center space-x-2">
                                                 <span className="px-2 py-1 text-sm font-medium text-white bg-red-500 rounded">
                                                     Declined
@@ -141,7 +140,7 @@ const MyArticles = () => {
                                                     size="sm"
                                                     onClick={() =>
                                                         handleOpenModal(
-                                                            article.declinedReason
+                                                            article.declineReason
                                                         )
                                                     }
                                                 >

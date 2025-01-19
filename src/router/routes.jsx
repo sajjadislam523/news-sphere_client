@@ -14,6 +14,7 @@ import UpdateArticle from "../pages/Articles/UpdateArticle.jsx";
 import Login from "../pages/Auth/Login.jsx";
 import Register from "../pages/Auth/Register.jsx";
 import Home from "../pages/Home/Home.jsx";
+import Profile from "../pages/Profile/Profile.jsx";
 import Payment from "../pages/Subscription/Payment.jsx";
 import PrivateRoute from "./PrivateRoute.jsx";
 
@@ -33,6 +34,14 @@ const routes = createBrowserRouter([
             {
                 path: "/register",
                 element: <Register />,
+            },
+            {
+                path: "/profile",
+                element: (
+                    <PrivateRoute>
+                        <Profile />
+                    </PrivateRoute>
+                ),
             },
             {
                 path: "/addArticles",

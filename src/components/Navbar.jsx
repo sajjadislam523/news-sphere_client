@@ -34,13 +34,16 @@ const Navbar = () => {
             </Link>
             {user ? (
                 <>
-                    <div className="w-10 h-10">
-                        <img
-                            src={user.photoURL}
-                            className="object-cover w-full h-full rounded-full"
-                            alt={user?.displayName}
-                        />
-                    </div>
+                    {" "}
+                    <Link to="/profile">
+                        <div className="w-10 h-10">
+                            <img
+                                src={user.photoURL}
+                                className="object-cover w-full h-full rounded-full"
+                                alt={user?.displayName}
+                            />
+                        </div>
+                    </Link>
                     <Button
                         className="transition-all duration-300 ease-in-out rounded-full hover:bg-black hover:text-white"
                         variant="outline"
