@@ -10,6 +10,7 @@ import AllArticles from "../pages/Articles/AllArticles.jsx";
 import ArticleDetails from "../pages/Articles/ArticleDetails.jsx";
 import MyArticles from "../pages/Articles/MyArticles.jsx";
 import PremiumArticles from "../pages/Articles/PremiumArticles.jsx";
+import UpdateArticle from "../pages/Articles/UpdateArticle.jsx";
 import Login from "../pages/Auth/Login.jsx";
 import Register from "../pages/Auth/Register.jsx";
 import Home from "../pages/Home/Home.jsx";
@@ -74,6 +75,14 @@ const routes = createBrowserRouter([
                 element: (
                     <PrivateRoute>
                         <ArticleDetails />
+                    </PrivateRoute>
+                ),
+            },
+            {
+                path: "/articles/update/:id",
+                element: (
+                    <PrivateRoute>
+                        <UpdateArticle />
                     </PrivateRoute>
                 ),
             },
