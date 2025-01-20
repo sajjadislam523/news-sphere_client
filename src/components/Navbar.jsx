@@ -46,7 +46,6 @@ const Navbar = () => {
 
     useEffect(() => {
         if (isMenuOpen) {
-            // GSAP animation for opening
             gsap.fromTo(
                 menuRef.current,
                 { opacity: 0, y: -20, display: "none" },
@@ -73,12 +72,10 @@ const Navbar = () => {
     return (
         <nav className="sticky top-0 z-50 p-4 border-b shadow-lg bg-secondary text-primary border-border">
             <div className="container flex items-center justify-between mx-auto">
-                {/* Logo */}
                 <Link to="/" className="text-2xl font-bold font-poppins">
                     NewsSphere
                 </Link>
 
-                {/* Hamburger Button */}
                 <button
                     className="text-2xl lg:hidden"
                     onClick={handleMenuToggle}
@@ -86,7 +83,6 @@ const Navbar = () => {
                     {isMenuOpen ? <FaTimes /> : <FaBars />}
                 </button>
 
-                {/* Desktop Links */}
                 <div className="items-center hidden gap-6 lg:flex font-poppins">
                     {links}
                     {user ? (

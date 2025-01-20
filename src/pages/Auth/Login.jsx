@@ -8,11 +8,12 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import loginImg from "../../assets/auth/loginGif.gif";
 import useAuth from "../../hooks/useAuth.jsx";
-import useAxiosPublic from "../../hooks/useAxiosPublic.jsx";
+import useAxiosSecure from "../../hooks/useAxiosSecure.jsx";
 
 const Login = () => {
     const { logIn, googleSignIn } = useAuth();
-    const { axiosPublic } = useAxiosPublic();
+    // const { axiosPublic } = useAxiosPublic();
+    const axiosSecure = useAxiosSecure();
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || "/";
@@ -67,7 +68,7 @@ const Login = () => {
                     email: res.user?.email,
                     name: res.user?.displayName,
                 };
-                axiosPublic.post("/users", userInfo).then((res) => {
+                axiosSecure.post("/users", userInfo).then((res) => {
                     if (res.data.insertedId) {
                         Swal.fire({
                             title: "Login Successful",
