@@ -28,7 +28,7 @@ const ArticleDetails = () => {
     }
 
     return (
-        <div className="container px-4 py-10 mx-auto bg-white rounded-lg shadow-lg lg:px-8">
+        <div className="container px-8 py-10 mx-auto bg-white rounded-lg shadow-lg lg:px-8">
             <Helmet>
                 <title>{article.title} | My News Platform</title>
                 <meta name="description" content={article.description} />

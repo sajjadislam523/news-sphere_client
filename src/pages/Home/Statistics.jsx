@@ -5,7 +5,7 @@ import useAxiosSecure from "../../hooks/useAxiosSecure.jsx";
 const Statistics = () => {
     const axiosSecure = useAxiosSecure();
 
-    const { data: users = {}, isLoading } = useQuery({
+    const { data: users = [], isLoading } = useQuery({
         queryKey: ["users"],
         queryFn: async () => {
             const res = await axiosSecure.get("/users");
