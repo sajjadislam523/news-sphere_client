@@ -40,7 +40,7 @@ const Register = () => {
             /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^A-Za-z0-9]).*$/;
         if (!verifyPass.test(password)) {
             setError(
-                "Password must contain at least one uppercase letter one lowercase letter and one special character."
+                "Password must contain at least one uppercase letter one lowercase letter one number and one special character."
             );
             return;
         }
