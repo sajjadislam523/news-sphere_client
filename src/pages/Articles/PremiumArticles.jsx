@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { Helmet } from "react-helmet-async";
 import ArticleCard from "../../components/ArticleCard.jsx";
 import Loading from "../../components/Loading.jsx";
 import useAxiosSecure from "../../hooks/useAxiosSecure.jsx";
@@ -33,24 +34,30 @@ const PremiumArticles = () => {
     const premiumArticles = articles.filter((article) => article.isPremium);
 
     return (
-        <div className="p-6">
-            <h1 className="mb-4 text-2xl font-bold text-center font-merriweather">
-                Premium Articles
-            </h1>
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                {premiumArticles.length === 0 ? (
-                    <p>No premium articles available.</p>
-                ) : (
-                    premiumArticles.map((article) => (
-                        <ArticleCard
-                            key={article._id}
-                            article={article}
-                            subscriptionStatus={subscriptionStatus}
-                        />
-                    ))
-                )}
+        <>
+            <Helmet>
+                <title>Premium Articles - NewsSphere</title>
+            </Helmet>
+
+            <div className="p-6">
+                <h1 className="mb-4 text-2xl font-bold text-center font-merriweather">
+                    Premium Articles
+                </h1>
+                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                    {premiumArticles.length === 0 ? (
+                        <p>No premium articles available.</p>
+                    ) : (
+                        premiumArticles.map((article) => (
+                            <ArticleCard
+                                key={article._id}
+                                article={article}
+                                subscriptionStatus={subscriptionStatus}
+                            />
+                        ))
+                    )}
+                </div>
             </div>
-        </div>
+        </>
     );
 };
 

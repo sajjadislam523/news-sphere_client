@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Chart } from "react-google-charts";
+import { Helmet } from "react-helmet-async";
 import useAxiosSecure from "../../hooks/useAxiosSecure.jsx";
 
 const Dashboard = () => {
@@ -75,73 +76,78 @@ const Dashboard = () => {
     ];
 
     return (
-        <div className="max-w-6xl p-6 mx-auto">
-            <h1 className="mb-6 text-3xl font-bold text-center">
-                Admin Dashboard
-            </h1>
-            <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-                {/* Dynamic Pie Chart */}
-                <div className="p-4 bg-white rounded-lg shadow-md">
-                    <h2 className="mb-4 text-xl font-bold text-center">
-                        Articles by Publisher (%)
-                    </h2>
-                    <Chart
-                        chartType="PieChart"
-                        width="100%"
-                        height="300px"
-                        data={pieChartData}
-                        options={{
-                            title: "Articles Distribution",
-                            pieHole: 0.4,
-                            is3D: true,
-                        }}
-                    />
+        <>
+            <Helmet>
+                <title>NewsSphere Admin Dashboard</title>
+            </Helmet>
+            <div className="max-w-6xl p-6 mx-auto">
+                <h1 className="mb-6 text-3xl font-bold text-center">
+                    Admin Dashboard
+                </h1>
+                <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+                    {/* Dynamic Pie Chart */}
+                    <div className="p-4 bg-white rounded-lg shadow-md">
+                        <h2 className="mb-4 text-xl font-bold text-center">
+                            Articles by Publisher (%)
+                        </h2>
+                        <Chart
+                            chartType="PieChart"
+                            width="100%"
+                            height="300px"
+                            data={pieChartData}
+                            options={{
+                                title: "Articles Distribution",
+                                pieHole: 0.4,
+                                is3D: true,
+                            }}
+                        />
+                    </div>
+
+                    {/* Static Line Chart */}
+                    <div className="p-4 bg-white rounded-lg shadow-md">
+                        <h2 className="mb-4 text-xl font-bold text-center">
+                            Monthly Views
+                        </h2>
+                        <Chart
+                            chartType="LineChart"
+                            width="100%"
+                            height="300px"
+                            data={lineChartData}
+                            options={{
+                                title: "Views Over Months",
+                                hAxis: { title: "Month" },
+                                vAxis: { title: "Views" },
+                                legend: { position: "bottom" },
+                            }}
+                        />
+                    </div>
                 </div>
 
-                {/* Static Line Chart */}
-                <div className="p-4 bg-white rounded-lg shadow-md">
+                {/* Static Bar Chart */}
+                <div className="p-4 mt-8 bg-white rounded-lg shadow-md">
                     <h2 className="mb-4 text-xl font-bold text-center">
-                        Monthly Views
+                        Yearly Articles Published
                     </h2>
                     <Chart
-                        chartType="LineChart"
+                        chartType="BarChart"
                         width="100%"
                         height="300px"
-                        data={lineChartData}
+                        data={barChartData}
                         options={{
-                            title: "Views Over Months",
-                            hAxis: { title: "Month" },
-                            vAxis: { title: "Views" },
-                            legend: { position: "bottom" },
+                            chart: {
+                                title: "Articles Published Over Years",
+                            },
+                            hAxis: {
+                                title: "Year",
+                            },
+                            vAxis: {
+                                title: "Articles",
+                            },
                         }}
                     />
                 </div>
             </div>
-
-            {/* Static Bar Chart */}
-            <div className="p-4 mt-8 bg-white rounded-lg shadow-md">
-                <h2 className="mb-4 text-xl font-bold text-center">
-                    Yearly Articles Published
-                </h2>
-                <Chart
-                    chartType="BarChart"
-                    width="100%"
-                    height="300px"
-                    data={barChartData}
-                    options={{
-                        chart: {
-                            title: "Articles Published Over Years",
-                        },
-                        hAxis: {
-                            title: "Year",
-                        },
-                        vAxis: {
-                            title: "Articles",
-                        },
-                    }}
-                />
-            </div>
-        </div>
+        </>
     );
 };
 

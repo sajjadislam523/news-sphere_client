@@ -90,7 +90,7 @@ const AllUsers = () => {
                                     <TableCell>
                                         <img
                                             src={
-                                                user.photoUrl ||
+                                                user.photoURL ||
                                                 "/default-avatar.png"
                                             }
                                             alt={user.name}

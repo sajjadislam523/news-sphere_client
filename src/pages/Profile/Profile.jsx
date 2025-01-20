@@ -4,6 +4,7 @@ import { Label } from "@/components/ui/label";
 import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import { useState } from "react";
+import { Helmet } from "react-helmet-async";
 import Swal from "sweetalert2";
 import Loading from "../../components/Loading.jsx";
 import useAuth from "../../hooks/useAuth.jsx";
@@ -83,101 +84,112 @@ const Profile = () => {
     };
 
     return (
-        <div className="container p-6 mx-auto">
-            <h1 className="mb-6 text-3xl font-bold text-center font-merriweather">
-                My Profile
-            </h1>
-            <div className="max-w-lg p-6 mx-auto bg-white rounded-lg shadow-md">
-                <form onSubmit={handleUpdate}>
-                    <div className="mb-4">
-                        <Label htmlFor="name" className="font-poppins">
-                            Name
-                        </Label>
-                        <Input
-                            id="name"
-                            name="name"
-                            type="text"
-                            value={userData.name}
-                            onChange={handleInputChange}
-                            disabled={!isEditing}
-                            className="font-poppins"
-                        />
-                    </div>
-                    <div className="mb-4">
-                        <Label htmlFor="email" className="font-poppins">
-                            Email
-                        </Label>
-                        <Input
-                            id="email"
-                            name="email"
-                            type="email"
-                            value={userData.email}
-                            disabled
-                            className="font-poppins"
-                        />
-                        <p className="mt-1 text-sm text-gray-500 font-poppins">
-                            Email cannot be changed.
-                        </p>
-                    </div>
-                    <div className="mb-4">
-                        <Label htmlFor="isAdmin" className="font-poppins">
-                            Status
-                        </Label>
-                        <Input
-                            id="isAdmin"
-                            name="isAdmin"
-                            type="text"
-                            value={userData.isAdmin ? "Admin" : "Regular User"}
-                            disabled
-                            className="font-poppins"
-                        />
-                    </div>
-                    <div className="mb-4">
-                        <Label htmlFor="subscription" className="font-poppins">
-                            Subscription
-                        </Label>
-                        <Input
-                            id="subscription"
-                            name="subscription"
-                            type="text"
-                            value={subscriptionStatus}
-                            disabled
-                            className="font-poppins"
-                        />
-                    </div>
-                    <div className="flex justify-end space-x-4">
-                        {isEditing ? (
-                            <>
-                                <Button
-                                    type="button"
-                                    variant="outline"
-                                    onClick={handleCancel}
-                                    className="font-poppins"
-                                >
-                                    Cancel
-                                </Button>
-                                <Button
-                                    type="submit"
-                                    variant="default"
-                                    className="font-poppins"
-                                >
-                                    Save Changes
-                                </Button>
-                            </>
-                        ) : (
-                            <Button
-                                type="button"
-                                variant="default"
-                                onClick={() => setIsEditing(true)}
+        <>
+            <Helmet>
+                <title>My Profile - NewsSphere</title>
+            </Helmet>
+
+            <div className="container p-6 mx-auto">
+                <h1 className="mb-6 text-3xl font-bold text-center font-merriweather">
+                    My Profile
+                </h1>
+                <div className="max-w-lg p-6 mx-auto bg-white rounded-lg shadow-md">
+                    <form onSubmit={handleUpdate}>
+                        <div className="mb-4">
+                            <Label htmlFor="name" className="font-poppins">
+                                Name
+                            </Label>
+                            <Input
+                                id="name"
+                                name="name"
+                                type="text"
+                                value={userData.name}
+                                onChange={handleInputChange}
+                                disabled={!isEditing}
+                                className="font-poppins"
+                            />
+                        </div>
+                        <div className="mb-4">
+                            <Label htmlFor="email" className="font-poppins">
+                                Email
+                            </Label>
+                            <Input
+                                id="email"
+                                name="email"
+                                type="email"
+                                value={userData.email}
+                                disabled
+                                className="font-poppins"
+                            />
+                            <p className="mt-1 text-sm text-gray-500 font-poppins">
+                                Email cannot be changed.
+                            </p>
+                        </div>
+                        <div className="mb-4">
+                            <Label htmlFor="isAdmin" className="font-poppins">
+                                Status
+                            </Label>
+                            <Input
+                                id="isAdmin"
+                                name="isAdmin"
+                                type="text"
+                                value={
+                                    userData.isAdmin ? "Admin" : "Regular User"
+                                }
+                                disabled
+                                className="font-poppins"
+                            />
+                        </div>
+                        <div className="mb-4">
+                            <Label
+                                htmlFor="subscription"
                                 className="font-poppins"
                             >
-                                Edit Profile
-                            </Button>
-                        )}
-                    </div>
-                </form>
+                                Subscription
+                            </Label>
+                            <Input
+                                id="subscription"
+                                name="subscription"
+                                type="text"
+                                value={subscriptionStatus}
+                                disabled
+                                className="font-poppins"
+                            />
+                        </div>
+                        <div className="flex justify-end space-x-4">
+                            {isEditing ? (
+                                <>
+                                    <Button
+                                        type="button"
+                                        variant="outline"
+                                        onClick={handleCancel}
+                                        className="font-poppins"
+                                    >
+                                        Cancel
+                                    </Button>
+                                    <Button
+                                        type="submit"
+                                        variant="default"
+                                        className="font-poppins"
+                                    >
+                                        Save Changes
+                                    </Button>
+                                </>
+                            ) : (
+                                <Button
+                                    type="button"
+                                    variant="default"
+                                    onClick={() => setIsEditing(true)}
+                                    className="font-poppins"
+                                >
+                                    Edit Profile
+                                </Button>
+                            )}
+                        </div>
+                    </form>
+                </div>
             </div>
-        </div>
+        </>
     );
 };
 
