@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
 import { Cursor, useTypewriter } from "react-simple-typewriter";
 import AllPublishers from "./AllPublishers.jsx";
@@ -7,7 +8,6 @@ import Statistics from "./Statistics.jsx";
 import TrendingArticles from "./TrendingArticles.jsx";
 
 const Home = () => {
-    // Typewriter effect for the heading
     const [text] = useTypewriter({
         words: [
             "Welcome to Our News Platform!",
@@ -24,11 +24,15 @@ const Home = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const timer = setTimeout(() => {
-            setIsModalOpen(true);
-        }, 10000);
+        const modalShown = localStorage.getItem("modal-shown");
+        if (!modalShown) {
+            const timer = setTimeout(() => {
+                setIsModalOpen(true);
+                localStorage.setItem("modal-shown", "true");
+            }, 10000);
 
-        return () => clearTimeout(timer);
+            return () => clearTimeout(timer);
+        }
     }, []);
 
     const handleSubscriptionClick = () => {
@@ -38,12 +42,19 @@ const Home = () => {
 
     return (
         <div className="container px-6 mx-auto">
-            <div className="py-6 text-center">
+            <Helmet>
+                <title>Home - NewsSphere</title>
+                <meta
+                    name="description"
+                    content="Discover trending news and premium articles."
+                />
+            </Helmet>
+            <div className="py-4 text-center">
                 <h1 className="text-xl font-extrabold text-gray-800 md:text-4xl font-merriweather">
                     <span>{text}</span>
                     <Cursor cursorStyle="|" />
                 </h1>
-                <p className="mt-4 text-sm text-gray-600 md:text-lg font-poppins">
+                <p className="mt-2 text-sm text-gray-600 md:text-lg font-poppins">
                     Discover the latest articles, news, and more.
                 </p>
             </div>

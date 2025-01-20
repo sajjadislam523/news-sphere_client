@@ -52,7 +52,7 @@ const TrendingArticles = () => {
                 }}
             >
                 {articles.map((article) => (
-                    <SwiperSlide key={article._id} className="my-8">
+                    <SwiperSlide key={article._id} className="my-4">
                         <ArticleCard
                             article={article}
                             subscriptionStatus={subscriptionStatus}
