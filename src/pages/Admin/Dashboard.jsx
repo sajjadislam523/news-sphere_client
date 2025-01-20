@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Chart } from "react-google-charts";
 import { Helmet } from "react-helmet-async";
+import Loading from "../../components/Loading.jsx";
 import useAxiosSecure from "../../hooks/useAxiosSecure.jsx";
 
 const Dashboard = () => {
@@ -36,7 +37,7 @@ const Dashboard = () => {
     }, [axiosSecure]);
 
     if (isLoading) {
-        return <div>Loading...</div>;
+        return <Loading />;
     }
 
     if (publicationsData.length === 0) {

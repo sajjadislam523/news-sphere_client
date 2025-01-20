@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import ArticleCard from "../../components/ArticleCard.jsx";
+import Loading from "../../components/Loading.jsx";
 import useAxiosSecure from "../../hooks/useAxiosSecure.jsx";
 import useSubscription from "../../hooks/useSubscription.jsx";
 
@@ -81,7 +82,7 @@ const AllArticles = () => {
                     >
                         <option value="">All Publishers</option>
                         {publishersLoading ? (
-                            <option>Loading...</option>
+                            <option>Loading Publishers</option>
                         ) : (
                             publishers?.map((publisher) => (
                                 <option
@@ -96,7 +97,9 @@ const AllArticles = () => {
                 </div>
 
                 {articlesLoading ? (
-                    <div className="text-center">Loading articles...</div>
+                    <div className="text-center">
+                        <Loading />
+                    </div>
                 ) : articles.length === 0 ? (
                     <div className="text-center text-gray-500">
                         No articles found.

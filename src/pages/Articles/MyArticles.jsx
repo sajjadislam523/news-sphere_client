@@ -19,6 +19,7 @@ import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import Loading from "../../components/Loading.jsx";
 import useAuth from "../../hooks/useAuth.jsx";
 import useAxiosSecure from "../../hooks/useAxiosSecure.jsx";
 
@@ -98,7 +99,9 @@ const MyArticles = () => {
                 </h1>
 
                 {isLoading ? (
-                    <p className="text-center">Loading...</p>
+                    <p className="text-center">
+                        <Loading />
+                    </p>
                 ) : articles.length === 0 ? (
                     <p className="text-center">No articles found.</p>
                 ) : (
