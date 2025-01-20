@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
+import ErrorPage from "../components/ErrorPage.jsx";
 import DashboardLayout from "../layouts/DashboardLayout.jsx";
 import MainLayout from "../layouts/MainLayout.jsx";
 import AddPublishers from "../pages/Admin/AddPublishers.jsx";
@@ -97,7 +98,7 @@ const routes = createBrowserRouter([
             },
             {
                 path: "*",
-                element: <div>404 Not Found</div>,
+                element: <ErrorPage />,
             },
         ],
     },

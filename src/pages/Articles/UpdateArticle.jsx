@@ -148,7 +148,7 @@ const UpdateArticle = () => {
     }
 
     return (
-        <div className="flex items-center justify-center min-h-screen px-4 bg-gray-100 sm:px-6 lg:px-8 font-poppins">
+        <div className="flex items-center justify-center min-h-screen px-4 sm:px-6 lg:px-8 font-poppins">
             <div className="w-full max-w-2xl">
                 <Card>
                     <CardHeader className="p-4">
