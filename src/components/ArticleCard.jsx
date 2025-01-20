@@ -30,25 +30,20 @@ const ArticleCard = ({ article, subscriptionStatus }) => {
                 />
             </CardHeader>
 
-            {/* Content */}
             <CardContent className="p-4 space-y-3">
-                {/* Title */}
                 <CardTitle className="text-lg font-bold font-merriweather">
                     {article.title}
                 </CardTitle>
 
-                {/* Description */}
                 <CardDescription className="text-sm text-gray-700 font-poppins line-clamp-3">
                     {article.description.slice(0, 100)}...
                 </CardDescription>
 
-                {/* Publisher */}
                 <p className="text-xs text-gray-500 font-poppins">
                     Publisher: {article.publisher}
                 </p>
             </CardContent>
 
-            {/* Footer */}
             <CardFooter className="p-4 mt-auto">
                 <Button
                     variant={

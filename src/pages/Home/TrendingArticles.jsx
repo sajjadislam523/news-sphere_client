@@ -52,11 +52,16 @@ const TrendingArticles = () => {
                 }}
             >
                 {articles.map((article) => (
-                    <SwiperSlide key={article._id} className="my-4">
-                        <ArticleCard
-                            article={article}
-                            subscriptionStatus={subscriptionStatus}
-                        />
+                    <SwiperSlide
+                        key={article._id}
+                        className="flex items-center justify-center"
+                    >
+                        <div className="w-[400px] h-[450px]">
+                            <ArticleCard
+                                article={article}
+                                subscriptionStatus={subscriptionStatus}
+                            />
+                        </div>
                     </SwiperSlide>
                 ))}
             </Swiper>

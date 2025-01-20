@@ -9,6 +9,7 @@ const Statistics = () => {
         queryKey: ["users"],
         queryFn: async () => {
             const res = await axiosSecure.get("/users");
+
             return res.data;
         },
     });
@@ -18,8 +19,8 @@ const Statistics = () => {
     }
 
     const totalUsers = users.length;
-    const normalUsers = users.filter((user) => !user.isPremium).length;
-    const premiumUsers = users.filter((user) => user.isPremium).length;
+    const normalUsers = users.filter((user) => !user.isSubscribed).length;
+    const premiumUsers = users.filter((user) => user.isSubscribed).length;
 
     return (
         <div className="py-10 bg-gray-100">

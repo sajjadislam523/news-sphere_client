@@ -167,9 +167,8 @@ const Articles = () => {
                                     </TableCell>
                                     <TableCell>
                                         <div className="flex space-x-2">
+                                            {/* Approve Button */}
                                             <Button
-                                                // className="border rounded-full"
-                                                // variant="primary"
                                                 title="Approve Article"
                                                 onClick={() =>
                                                     handleApproveArticle(
@@ -179,12 +178,18 @@ const Articles = () => {
                                                 disabled={
                                                     isApproved || isDeclined
                                                 }
+                                                className={`rounded-full ${
+                                                    isApproved
+                                                        ? "text-green-600"
+                                                        : "text-gray-600 hover:text-green-800"
+                                                }`}
                                             >
                                                 <FaCheck />
                                             </Button>
+
+                                            {/* Decline Button */}
                                             <Button
                                                 title="Decline Article"
-                                                // className="rounded-full"
                                                 onClick={() =>
                                                     handleDeclineArticle(
                                                         article._id
@@ -193,35 +198,45 @@ const Articles = () => {
                                                 disabled={
                                                     isApproved || isDeclined
                                                 }
+                                                className={`rounded-full ${
+                                                    isDeclined
+                                                        ? "text-red-600"
+                                                        : "text-gray-600 hover:text-red-800"
+                                                }`}
                                             >
                                                 <FaTimes />
                                             </Button>
+
+                                            {/* Delete Button */}
                                             <Button
-                                                variant="destructive"
                                                 title="Delete Article"
-                                                // className="rounded-full"
                                                 onClick={() =>
                                                     handleDeleteArticle(
                                                         article._id
                                                     )
                                                 }
+                                                className="text-gray-600 rounded-full hover:text-red-800"
                                             >
                                                 <FaTrash />
                                             </Button>
-                                            {!article.isPremium && (
-                                                <Button
-                                                    title="Make Article Premium"
-                                                    // className="rounded-full"
-                                                    onClick={() =>
-                                                        handleMakePremium(
-                                                            article._id
-                                                        )
-                                                    }
-                                                    disabled={isDeclined}
-                                                >
-                                                    <FaStar />
-                                                </Button>
-                                            )}
+
+                                            {/* Premium Button */}
+                                            <Button
+                                                title="Make Article Premium"
+                                                onClick={() =>
+                                                    handleMakePremium(
+                                                        article._id
+                                                    )
+                                                }
+                                                disabled={isDeclined}
+                                                className={`rounded-full ${
+                                                    article.isPremium
+                                                        ? "text-yellow-500"
+                                                        : "text-gray-600 hover:text-yellow-800"
+                                                }`}
+                                            >
+                                                <FaStar />
+                                            </Button>
                                         </div>
                                     </TableCell>
                                 </TableRow>
