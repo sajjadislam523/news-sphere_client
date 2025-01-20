@@ -70,6 +70,8 @@ Explore the live platform and stay updated: [NewsSphere Live Site](https://news-
     -   TailwindCSS
     -   React Router
     -   React-Select
+    -   SweetAlert2
+    -   Radix UI components for accessibility
 
 -   **Backend:**
 
@@ -91,3 +93,18 @@ Explore the live platform and stay updated: [NewsSphere Live Site](https://news-
 
 -   **Image Hosting:**
     -   ImgBB API
+
+---
+
+## **Additional Packages and Libraries Used**
+
+1. **GSAP**: For creating smooth animations across the website.
+2. **Day.js**: To handle and format dates with ease.
+3. **React Helmet Async**: For managing meta tags and improving SEO.
+4. **Lucide-React**: For including scalable vector icons in the UI.
+5. **React CountUp**: Used for creating animated number counters.
+6. **React Fast Marquee**: Adds smooth scrolling marquees for displaying breaking news.
+7. **React Google Charts**: Integrated for data visualization with charts.
+8. **React Simple Typewriter**: Provides typewriting animations to enhance the website's visual appeal.
+9. **ShadCn**: Used as component library.
+10. **Swiper.js**: Enables touch-based sliders for a mobile-friendly experience.
