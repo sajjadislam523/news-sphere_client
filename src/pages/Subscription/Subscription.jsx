@@ -16,27 +16,21 @@ const Subscription = () => {
     const [period, setPeriod] = useState(1);
 
     const prices = {
-        1: 100,
-        7200: 500,
-        14400: 1000,
+        1: 100, // 1 minute = $1
+        7200: 500, // 5 days = $5
+        14400: 1000, // 10 days = $10
     };
 
     const handleSubscription = async () => {
         if (!stripe || !elements) {
-            Swal.fire({
-                title: "Payment Error",
-                text: "Please install the Stripe plugin in your browser to proceed with the payment.",
-                icon: "error",
-            });
+            Swal.fire("Error", "Stripe is not initialized.", "error");
+            return;
         }
 
         setLoading(true);
 
         try {
-            const timezoneOffset = 360;
-
-            const adjustedPeriod = period + timezoneOffset;
-
+            // Request payment intent from the backend
             const { data } = await axiosSecure.post("/create-payment-intent", {
                 amount: prices[period],
             });
@@ -44,17 +38,13 @@ const Subscription = () => {
             const clientSecret = data.clientSecret;
 
             const cardElement = elements.getElement(CardElement);
-
             if (!cardElement) {
-                Swal.fire({
-                    title: "Error",
-                    text: "Card details are not entered.",
-                    icon: "error",
-                });
+                Swal.fire("Error", "Please enter card details.", "error");
                 setLoading(false);
                 return;
             }
 
+            // Confirm the payment
             const result = await stripe.confirmCardPayment(clientSecret, {
                 payment_method: {
                     card: cardElement,
@@ -66,30 +56,22 @@ const Subscription = () => {
             });
 
             if (result.error) {
-                Swal.fire({
-                    title: "Payment Error",
-                    text: result.error.message,
-                    icon: "error",
-                });
+                Swal.fire("Payment Error", result.error.message, "error");
             } else if (result.paymentIntent.status === "succeeded") {
+                // Update subscription in the database
                 await axiosSecure.patch(`/users/subscribe/${user?.email}`, {
-                    period: adjustedPeriod,
+                    period,
                 });
-                console.log("Sent adjusted period:", adjustedPeriod);
 
-                Swal.fire({
-                    title: "Subscription Successful",
-                    text: "You have successfully subscribed to the premium plan!",
-                    icon: "success",
-                });
-                setLoading(false);
+                Swal.fire(
+                    "Success",
+                    "You have successfully subscribed to the premium plan!",
+                    "success"
+                );
             }
         } catch (error) {
-            Swal.fire({
-                title: "Error",
-                text: error.message,
-                icon: "error",
-            });
+            Swal.fire("Error", error.message, "error");
+        } finally {
             setLoading(false);
         }
     };
@@ -99,7 +81,6 @@ const Subscription = () => {
             <h1 className="mb-4 text-4xl font-extrabold text-center text-gray-900">
                 Choose Your Subscription Plan
             </h1>
-
             <h2 className="mb-12 text-lg font-semibold text-center text-gray-700">
                 Select a plan that suits your needs and get started instantly.
             </h2>
@@ -127,7 +108,7 @@ const Subscription = () => {
                             onChange={(e) =>
                                 setPeriod(parseInt(e.target.value))
                             }
-                            className="w-full p-3 transition duration-300 ease-in-out bg-white border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none hover:bg-gray-100"
+                            className="w-full p-3 bg-white border rounded-lg"
                         >
                             <option value={1}>1 Minute - $1</option>
                             <option value={7200}>5 Days - $5</option>
@@ -135,18 +116,14 @@ const Subscription = () => {
                         </select>
                     </div>
 
-                    <div className="w-full max-w-md p-6 bg-white border border-gray-300 shadow-lg rounded-xl">
+                    <div className="w-full max-w-md p-6 bg-white border rounded-lg shadow-md">
                         <h2 className="mb-6 text-xl font-semibold text-gray-800">
                             Enter Your Payment Details
                         </h2>
-
-                        <div className="mb-6">
-                            <CardElement options={{ hidePostalCode: true }} />
-                        </div>
-
+                        <CardElement className="px-2 py-4 my-4 border rounded-md" />
                         <Button
                             variant="outline"
-                            className="w-full px-6 py-3 text-lg font-semibold text-black transition duration-300 ease-in-out bg-white border-2 border-black rounded-lg shadow-md hover:bg-black hover:text-white focus:outline-none focus:ring-2 focus:ring-black active:bg-gray-800"
+                            className="w-full px-6 py-3 text-lg font-semibold bg-white border-2 rounded-lg hover:bg-black hover:text-white"
                             onClick={handleSubscription}
                             disabled={loading || !stripe || !elements}
                         >
