@@ -45,7 +45,7 @@ const TrendingArticles = () => {
                 pagination={{ clickable: true }}
                 autoplay={{ delay: 2500, disableOnInteraction: false }}
                 breakpoints={{
-                    480: { slidesPerView: 1, spaceBetween: 10 },
+                    320: { slidesPerView: 1, spaceBetween: 10 },
                     768: { slidesPerView: 2, spaceBetween: 15 },
                     1024: { slidesPerView: 3, spaceBetween: 20 },
                     1440: { slidesPerView: 4, spaceBetween: 25 },
@@ -56,7 +56,7 @@ const TrendingArticles = () => {
                         key={article._id}
                         className="flex items-center justify-center"
                     >
-                        <div className="w-[400px] h-[450px]">
+                        <div className="w-full h-[450px]">
                             <ArticleCard
                                 article={article}
                                 subscriptionStatus={subscriptionStatus}
