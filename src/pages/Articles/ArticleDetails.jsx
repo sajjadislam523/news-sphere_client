@@ -1,3 +1,4 @@
+import Loading from "@/components/Loading";
 import { useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet-async";
 import { useParams } from "react-router-dom";
@@ -20,7 +21,7 @@ const ArticleDetails = () => {
     });
 
     if (isLoading) {
-        return <div>Loading...</div>;
+        return <Loading />;
     }
 
     if (error) {

@@ -1,3 +1,4 @@
+import Loading from "@/components/Loading";
 import { useQuery } from "@tanstack/react-query";
 import CountUp from "react-countup";
 import useAxiosSecure from "../../hooks/useAxiosSecure.jsx";
@@ -15,7 +16,7 @@ const Statistics = () => {
     });
 
     if (isLoading) {
-        return <div>Loading...</div>;
+        return <Loading />;
     }
 
     const totalUsers = users.length;
