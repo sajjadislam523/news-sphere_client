@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button.jsx";
 import gsap from "gsap";
 import { useEffect, useRef, useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import useAdmin from "../hooks/useAdmin.jsx";
 import useAuth from "../hooks/useAuth.jsx";
 
@@ -14,29 +14,78 @@ const Navbar = () => {
 
     const links = (
         <>
-            <Link to="/" className="hover:underline">
+            <NavLink
+                to="/"
+                className={({ isActive }) =>
+                    `hover:underline ${
+                        isActive ? "underline font-semibold" : ""
+                    }`
+                }
+            >
                 Home
-            </Link>
-            <Link to="/addArticles" className="hover:underline">
+            </NavLink>
+            <NavLink
+                to="/addArticles"
+                className={({ isActive }) =>
+                    `hover:underline text-sm ${
+                        isActive ? "underline font-semibold" : ""
+                    }`
+                }
+            >
                 Add Articles
-            </Link>
-            <Link to="/allArticles" className="hover:underline">
+            </NavLink>
+            <NavLink
+                to="/allArticles"
+                className={({ isActive }) =>
+                    `hover:underline text-sm ${
+                        isActive ? "underline font-semibold" : ""
+                    }`
+                }
+            >
                 All Articles
-            </Link>
-            <Link to="/subscription" className="hover:underline">
+            </NavLink>
+            <NavLink
+                to="/subscription"
+                className={({ isActive }) =>
+                    `hover:underline text-sm ${
+                        isActive ? "underline font-semibold" : ""
+                    }`
+                }
+            >
                 Subscription
-            </Link>
+            </NavLink>
             {user && isAdmin ? (
-                <Link to="/dashboard/home" className="hover:underline">
+                <NavLink
+                    to="/dashboard/home"
+                    className={({ isActive }) =>
+                        `hover:underline text-sm ${
+                            isActive ? "underline font-semibold" : ""
+                        }`
+                    }
+                >
                     Dashboard
-                </Link>
+                </NavLink>
             ) : null}
-            <Link to="/myArticles" className="hover:underline">
+            <NavLink
+                to="/myArticles"
+                className={({ isActive }) =>
+                    `hover:underline text-sm ${
+                        isActive ? "underline font-semibold" : ""
+                    }`
+                }
+            >
                 My Articles
-            </Link>
-            <Link to="/premiumArticles" className="hover:underline">
+            </NavLink>
+            <NavLink
+                to="/premiumArticles"
+                className={({ isActive }) =>
+                    `hover:underline text-sm ${
+                        isActive ? "underline font-semibold" : ""
+                    }`
+                }
+            >
                 Premium Articles
-            </Link>
+            </NavLink>
         </>
     );
 
