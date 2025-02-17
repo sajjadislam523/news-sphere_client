@@ -34,6 +34,18 @@ const ArticleDetails = () => {
         },
     });
 
+    const { data: authorArticles } = useQuery({
+        queryKey: ["authorArticles", article?.author],
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/user/articles`, {
+                params: {
+                    userEmail: article?.author,
+                },
+            });
+            return res.data.article.filter((a) => a._id !== id);
+        },
+    });
+
     if (isLoading) {
         return <Loading />;
     }
@@ -113,9 +125,7 @@ const ArticleDetails = () => {
                                     <div>
                                         <p className="font-medium text-gray-900 font-merriweather">
                                             {/* {article.author} */}
-                                            {author?.email === article.author
-                                                ? author.name
-                                                : "Author not available"}
+                                            {author?.name}
                                         </p>
                                         <p className="text-sm text-gray-500 font-poppins">
                                             {article.publisher}
@@ -189,25 +199,35 @@ const ArticleDetails = () => {
                     <aside className="mt-12 lg:col-span-4 lg:mt-0 lg:pl-8">
                         <div className="p-6 bg-gray-100 border border-gray-200 rounded-lg shadow-sm">
                             <h3 className="mb-4 text-lg font-bold text-gray-900 font-merriweather">
-                                Related Articles
+                                More from {author?.name || "this author"}
                             </h3>
-                            {article.related?.map((related) => (
-                                <a
-                                    key={related.id}
-                                    href={`/articles/${related.id}`}
-                                    className="block p-3 mb-4 transition-all border border-transparent rounded-lg group hover:bg-white hover:shadow-sm hover:border-gray-200"
-                                >
-                                    <p className="font-medium text-gray-900 group-hover:text-gray-800">
-                                        {related.title}
-                                    </p>
-                                    <p className="mt-1 text-sm text-gray-500">
-                                        {format(
-                                            parseISO(related.date),
-                                            "MMM dd, yyyy"
-                                        )}
-                                    </p>
-                                </a>
-                            ))}
+                            {authorArticles?.length > 0 ? (
+                                authorArticles.slice(0, 4).map(
+                                    (
+                                        related // Show max 4 articles
+                                    ) => (
+                                        <Link
+                                            key={related._id}
+                                            to={`/articles/${related._id}`}
+                                            className="block p-3 mb-4 transition-all border border-transparent rounded-lg group hover:bg-white hover:shadow-sm hover:border-gray-200"
+                                        >
+                                            <p className="font-medium text-gray-900 group-hover:text-gray-800">
+                                                {related.title}
+                                            </p>
+                                            <p className="mt-1 text-sm text-gray-500">
+                                                {format(
+                                                    parseISO(related.createdAt),
+                                                    "MMM dd, yyyy"
+                                                )}
+                                            </p>
+                                        </Link>
+                                    )
+                                )
+                            ) : (
+                                <p className="text-sm text-gray-500 font-poppins">
+                                    No other articles by this author
+                                </p>
+                            )}
                         </div>
 
                         <div className="p-6 mt-8 text-center bg-gray-100 border border-gray-200 rounded-lg">
