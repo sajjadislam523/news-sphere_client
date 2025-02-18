@@ -17,6 +17,7 @@ const Profile = () => {
         name: user.name || "",
     });
     const axiosSecure = useAxiosSecure();
+    console.log(user.photoURL);
 
     const { data: userData, isLoading } = useQuery({
         queryKey: ["userData", user.email],
@@ -89,11 +90,124 @@ const Profile = () => {
                 <title>My Profile - NewsSphere</title>
             </Helmet>
 
-            <div className="container p-6 mx-auto">
+            {/* <div className="container p-6 mx-auto">
                 <h1 className="mb-6 text-3xl font-bold text-center font-merriweather">
                     My Profile
                 </h1>
                 <div className="max-w-lg p-6 mx-auto bg-white rounded-lg shadow-md">
+                    <form onSubmit={handleUpdate}>
+                        <div className="mb-4">
+                            <Label htmlFor="name" className="font-poppins">
+                                Name
+                            </Label>
+                            <Input
+                                id="name"
+                                name="name"
+                                type="text"
+                                value={userData.name}
+                                onChange={handleInputChange}
+                                disabled={!isEditing}
+                                className="font-poppins"
+                            />
+                        </div>
+                        <div className="mb-4">
+                            <Label htmlFor="email" className="font-poppins">
+                                Email
+                            </Label>
+                            <Input
+                                id="email"
+                                name="email"
+                                type="email"
+                                value={userData.email}
+                                disabled
+                                className="font-poppins"
+                            />
+                            <p className="mt-1 text-sm text-gray-500 font-poppins">
+                                Email cannot be changed.
+                            </p>
+                        </div>
+                        <div className="mb-4">
+                            <Label htmlFor="isAdmin" className="font-poppins">
+                                Status
+                            </Label>
+                            <Input
+                                id="isAdmin"
+                                name="isAdmin"
+                                type="text"
+                                value={
+                                    userData.isAdmin ? "Admin" : "Regular User"
+                                }
+                                disabled
+                                className="font-poppins"
+                            />
+                        </div>
+                        <div className="mb-4">
+                            <Label
+                                htmlFor="subscription"
+                                className="font-poppins"
+                            >
+                                Subscription
+                            </Label>
+                            <Input
+                                id="subscription"
+                                name="subscription"
+                                type="text"
+                                value={subscriptionStatus}
+                                disabled
+                                className="font-poppins"
+                            />
+                        </div>
+                        <div className="flex justify-end space-x-4">
+                            {isEditing ? (
+                                <>
+                                    <Button
+                                        type="button"
+                                        variant="outline"
+                                        onClick={handleCancel}
+                                        className="font-poppins"
+                                    >
+                                        Cancel
+                                    </Button>
+                                    <Button
+                                        type="submit"
+                                        variant="default"
+                                        className="font-poppins"
+                                    >
+                                        Save Changes
+                                    </Button>
+                                </>
+                            ) : (
+                                <Button
+                                    type="button"
+                                    variant="default"
+                                    onClick={() => setIsEditing(true)}
+                                    className="font-poppins"
+                                >
+                                    Edit Profile
+                                </Button>
+                            )}
+                        </div>
+                    </form>
+                </div>
+            </div> */}
+
+            <div className="container p-6 mx-auto">
+                <h1 className="mb-6 text-3xl font-bold text-center font-merriweather">
+                    My Profile
+                </h1>
+
+                {/* Profile Card */}
+                <div className="max-w-lg p-6 mx-auto bg-white rounded-lg shadow-md">
+                    {/* Profile Image Section */}
+                    <div className="flex justify-center mb-4">
+                        <img
+                            src={user.photoURL || "/default-avatar.png"}
+                            alt="Profile Photo"
+                            className="object-cover w-24 h-24 rounded-full"
+                        />
+                    </div>
+
+                    {/* Profile Form */}
                     <form onSubmit={handleUpdate}>
                         <div className="mb-4">
                             <Label htmlFor="name" className="font-poppins">
