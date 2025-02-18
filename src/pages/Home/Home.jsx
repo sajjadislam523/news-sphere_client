@@ -1,3 +1,7 @@
+import Archivetimeline from "@/components/Archivetimeline";
+import EditorialStandards from "@/components/EditorialStandards";
+import NewsConsumptionGuide from "@/components/NewsConsumptionGuide";
+import PressFreedom from "@/components/PressFreedom.jsx";
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
@@ -59,9 +63,13 @@ const Home = () => {
                 </p>
             </div>
             <TrendingArticles />
+            <EditorialStandards />
             <AllPublishers />
             <Statistics />
+            <NewsConsumptionGuide />
+            <Archivetimeline />
             <Plans />
+            <PressFreedom />
             {isModalOpen && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
                     <div className="max-w-sm p-6 text-center bg-white rounded-lg shadow-lg">
